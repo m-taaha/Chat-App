@@ -8,7 +8,6 @@ import type { UserInfo } from "./types";
 function App() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
-  // console.log(userInfo)
 
   return (
     <div className="h-screen bg-zinc-900">

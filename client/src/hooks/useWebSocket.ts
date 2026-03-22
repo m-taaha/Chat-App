@@ -13,11 +13,11 @@ export function useWebSocket (userInfo: UserInfo) {
     const socketRef = useRef<WebSocket | null>(null);
 
  
-    // this should be running on mount 
+    // this should be running on mount  
     // on mount i want the connection to be happened
     useEffect(() => {
         const ws = new WebSocket("ws://localhost:8080");
-    
+        socketRef.current = ws
 
 
 
@@ -35,13 +35,11 @@ export function useWebSocket (userInfo: UserInfo) {
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data)
-            setmessages([...messages, data]) //mutating the array wihtout changing the previous one 
+            setmessages(prev => [...prev, data]) //mutating the array wihtout changing the previous one 
         };
 
         return () => {
-            ws.onclose = () => {
-
-            }
+            ws.close() 
         }
     }, []);
 
