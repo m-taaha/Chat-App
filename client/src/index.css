@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+
+
+
+
+/* 
+Background:     bg-zinc-900          (main)
+Surface:        bg-zinc-800          (cards, inputs)
+Border:         border-zinc-700      (subtle borders)
+
+Purple primary: bg-purple-600        (main button)
+Purple hover:   hover:bg-purple-700
+Purple glow:    ring-purple-500      (focus rings)
+Purple text:    text-purple-400      (labels, accents)
+
+Text primary:   text-white
+Text muted:     text-zinc-400
+*/
