@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useWebSocket } from "../hooks/useWebSocket"
 import type { UserInfo } from "../types"
 
@@ -9,6 +9,12 @@ interface ChatRoomProps {
 function ChatRoom({userInfo}: ChatRoomProps) {
   const {messages, sendMessage} = useWebSocket(userInfo);
   const [input, setInput] = useState("");
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({behavior: "smooth"})
+  }, [userInfo])
 
 
   const handleSend = () => {
@@ -21,8 +27,15 @@ function ChatRoom({userInfo}: ChatRoomProps) {
   return (
     <div className="h-full flex flex-col">
       {/* room name */}
-      <div className="bg-zinc-800 border-b border-zinc-700 px-6 py-4">
-        roomId
+      <div className="bg-zinc-800 border-b border-zinc-700 px-6 py-4 flex items-center justify-between">
+        <div>
+          <p className="text-white font-semibold"># {userInfo.roomId}</p>
+          <p className="text-zinc-500 text-xs">WebSocket chat</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+          <span className="text-zinc-400 text-sm">Live</span>
+        </div>
       </div>
 
       {/* {messags list - scrollable} */}
@@ -39,6 +52,7 @@ function ChatRoom({userInfo}: ChatRoomProps) {
             }
           >
             {message.message}
+            <div ref={bottomRef} />
           </div>
         ))}
       </div>
@@ -53,6 +67,9 @@ function ChatRoom({userInfo}: ChatRoomProps) {
         />
 
         <button
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSend();
+          }}
           onClick={handleSend}
           className="bg-purple-500 hover:bg-purple-700 px-8 py-3 rounded-4xl text-white font-semibold transition-colors "
         >

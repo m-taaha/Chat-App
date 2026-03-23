@@ -35,6 +35,9 @@ export function useWebSocket (userInfo: UserInfo) {
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data)
+            const time = new Date().toLocaleTimeString([], {
+                hour: "2-digit", minute: "2-digit"
+            })
             setmessages(prev => [...prev, data]) //mutating the array wihtout changing the previous one 
         };
 
