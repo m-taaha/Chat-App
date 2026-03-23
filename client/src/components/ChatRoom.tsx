@@ -47,20 +47,33 @@ function ChatRoom({userInfo}: ChatRoomProps) {
           </div>
         )}
 
-        
         {messages.map((message, i) => (
           // looping on messages and extracting {username, message} not messages---
           // chekcing if the message is mine or theirs-- by comapring message.username with userInfo.username - if it's matches its mine - in not it's theirs
           <div
             key={i}
-            className={
-              message.username === userInfo.username
-                ? "self-end bg-purple-600 text-white rounded-2xl rounded-br-sm px-4 py-2"
-                : "self-start bg-zinc-700 text-zinc-100 rounded-2xl rounded-bl-sm px-4 py-2"
-            }
+            className={`flex flex-col gap-1 ${isMine ? "items-end" : "items-start"}`}
           >
-            {message.message}
-            <div ref={bottomRef} />
+            <span className="text-xs text-zinc-500 px-1">
+              {message.username}
+            </span>
+            <div
+              className={`flex items-end gap-2 ${isMine ? "flex-row-reverse" : "flex-row"}`}
+            >
+              <p
+                className={`px-4 py-2 text-sm max-w-xs leading-relaxed
+      ${
+        isMine
+          ? "bg-purple-600 text-white rounded-2xl rounded-br-sm"
+          : "bg-zinc-700 text-zinc-100 rounded-2xl rounded-bl-sm"
+      }`}
+              >
+                {message.message}
+              </p>
+              <span className="text-xs text-zinc-600 whitespace-nowrap">
+                {message.time}
+              </span>
+            </div>
           </div>
         ))}
       </div>
@@ -68,20 +81,25 @@ function ChatRoom({userInfo}: ChatRoomProps) {
       {/* input  */}
       <div className="bg-zinc-800 border-t border-zinc-700 px-4 py-3 flex gap-3">
         <input
-          className="w-full rounded-4xl bg-white px-4 py-3 focus:outline-none  focus:ring-2 focus:ring-violet-800 transition-all"
+          className="flex-1 bg-zinc-700 border border-zinc-600 rounded-full px-5 py-2.5 text-white text-sm placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-        />
-
-        <button
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSend();
           }}
-          onClick={handleSend}
-          className="bg-purple-500 hover:bg-purple-700 px-8 py-3 rounded-4xl text-white font-semibold transition-colors "
-        >
-          Send
+        />
+
+        <button 
+        onClick={handleSend}
+        className="bg-purple-600 hover:bg-purple-700 w-10 h-10 rounded-full flex items-center justify-center transition-colors flex-shrink-0">
+
+          <svg
+            className="w-4 h-4 text-white fill-white ml-0.5"
+            viewBox="0 0 24 24"
+          >
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
         </button>
       </div>
     </div>
