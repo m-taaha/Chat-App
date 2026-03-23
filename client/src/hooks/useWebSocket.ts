@@ -38,7 +38,7 @@ export function useWebSocket (userInfo: UserInfo) {
             const time = new Date().toLocaleTimeString([], {
                 hour: "2-digit", minute: "2-digit"
             })
-            setmessages(prev => [...prev, data]) //mutating the array wihtout changing the previous one 
+            setmessages(prev => [...prev, data, time]) //mutating the array wihtout changing the previous one 
         };
 
         return () => {

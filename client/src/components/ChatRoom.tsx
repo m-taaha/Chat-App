@@ -14,7 +14,7 @@ function ChatRoom({userInfo}: ChatRoomProps) {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({behavior: "smooth"})
-  }, [userInfo])
+  }, [messages])
 
 
   const handleSend = () => {
@@ -46,36 +46,37 @@ function ChatRoom({userInfo}: ChatRoomProps) {
             <p className="text-xs">Be the first to say something 👋</p>
           </div>
         )}
+        {messages.map((message, i) => {
+          const isMine = message.username === userInfo.username;
 
-        {messages.map((message, i) => (
-          // looping on messages and extracting {username, message} not messages---
-          // chekcing if the message is mine or theirs-- by comapring message.username with userInfo.username - if it's matches its mine - in not it's theirs
-          <div
-            key={i}
-            className={`flex flex-col gap-1 ${isMine ? "items-end" : "items-start"}`}
-          >
-            <span className="text-xs text-zinc-500 px-1">
-              {message.username}
-            </span>
+          return (
+           
             <div
-              className={`flex items-end gap-2 ${isMine ? "flex-row-reverse" : "flex-row"}`}
+              key={i}
+              className={`flex flex-col gap-1 ${isMine ? "items-end" : "items-start"}`}
             >
-              <p
-                className={`px-4 py-2 text-sm max-w-xs leading-relaxed
-      ${
-        isMine
-          ? "bg-purple-600 text-white rounded-2xl rounded-br-sm"
-          : "bg-zinc-700 text-zinc-100 rounded-2xl rounded-bl-sm"
-      }`}
-              >
-                {message.message}
-              </p>
-              <span className="text-xs text-zinc-600 whitespace-nowrap">
-                {message.time}
+              <span className="text-xs text-zinc-500 px-1">
+                {message.username}
               </span>
+              <div
+                className={`flex items-end gap-2 ${isMine ? "flex-row-reverse" : "flex-row"}`}
+              >
+                <p
+                  className={`px-4 py-2 text-sm max-w-xs leading-relaxed ${
+                    isMine
+                      ? "bg-purple-600 text-white rounded-2xl rounded-br-sm"
+                      : "bg-zinc-700 text-zinc-100 rounded-2xl rounded-bl-sm"
+                  }`}
+                >
+                  {message.message}
+                </p>
+                <span className="text-xs text-zinc-600 whitespace-nowrap">
+                  {message.time}
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
+          ); 
+        })}
       </div>
 
       {/* input  */}
@@ -90,10 +91,10 @@ function ChatRoom({userInfo}: ChatRoomProps) {
           }}
         />
 
-        <button 
-        onClick={handleSend}
-        className="bg-purple-600 hover:bg-purple-700 w-10 h-10 rounded-full flex items-center justify-center transition-colors flex-shrink-0">
-
+        <button
+          onClick={handleSend}
+          className="bg-purple-600 hover:bg-purple-700 w-10 h-10 rounded-full flex items-center justify-center transition-colors flex-shrink-0"
+        >
           <svg
             className="w-4 h-4 text-white fill-white ml-0.5"
             viewBox="0 0 24 24"
