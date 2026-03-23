@@ -40,6 +40,14 @@ function ChatRoom({userInfo}: ChatRoomProps) {
 
       {/* {messags list - scrollable} */}
       <div className="flex-1 overflow-y-auto px-6 py-4 flex flex-col gap-3">
+        {messages.length === 0 && (
+          <div className="flex-1 flex flex-col items-center justify-center gap-2 text-zinc-600">
+            <p className="text-sm">No messages yet</p>
+            <p className="text-xs">Be the first to say something 👋</p>
+          </div>
+        )}
+
+        
         {messages.map((message, i) => (
           // looping on messages and extracting {username, message} not messages---
           // chekcing if the message is mine or theirs-- by comapring message.username with userInfo.username - if it's matches its mine - in not it's theirs
